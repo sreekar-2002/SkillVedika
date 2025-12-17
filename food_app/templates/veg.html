@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h4>VEG ITEMS</h4>
+
+<div class="container mb-5">
+
+  {% if veg %}
+  <div class="row g-4 justify-content-center">
+    {% for item in veg %}
+    <div class="col-12 col-sm-6 col-md-4 col-lg-2 d-flex justify-content-center">
+      <div class="card h-100">
+        <a href="{% url 'viewvegs' item.pk %}">
+          <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}">
+        </a>
+        <div class="card-body d-flex flex-column">
+          <h6 class="card-title">{{ item.name }}</h6>
+          <p>₹{{ item.price }}</p>
+          <p><strong>Category:</strong> {{ item.category }}</p>
+          <p><strong>Prepared in:</strong> {{ item.prepared_time }}</p>
+          <p class="text-secondary small">{{ item.description }}</p>
+          <a href="{% url 'viewvegs' item.pk %}" class="btn btn-sm mt-auto">Click to Order</a>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+    <p class="text-center text-danger mt-4">No veg items found</p>
+  {% endif %}
+</div>
+
+
+
+{% endblock %}

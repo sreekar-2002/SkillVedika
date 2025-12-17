@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<!-- ======================= FOOD ITEM SECTION ======================= -->
+<section class="movie-block container-fluid mb-5">
+  <h2 class="section-title text-center mb-4">
+    {% if nonveg %}Non-Veg Dish{% elif veg %}Veg Dish{% elif start %}Starter{% elif cool %}Cool Drink{% endif %}
+  </h2>
+
+  <div class="container">
+    <div class="row g-5 align-items-start">
+
+      <!-- Image -->
+      <div class="col-lg-4 col-md-6">
+        {% if nonveg %}
+          <img src="{{ nonveg.image.url }}" alt="{{ nonveg.name }}" class="img-fluid movie-img rounded shadow">
+        {% elif veg %}
+          <img src="{{ veg.image.url }}" alt="{{ veg.name }}" class="img-fluid movie-img rounded shadow">
+        {% elif start %}
+          <img src="{{ start.image.url }}" alt="{{ start.name }}" class="img-fluid movie-img rounded shadow">
+        {% elif cool %}
+          <img src="{{ cool.image.url }}" alt="{{ cool.name }}" class="img-fluid movie-img rounded shadow">
+        {% endif %}
+      </div>
+
+      <!-- Details -->
+      <div class="col-lg-8 col-md-6">
+        <h2 class="movie-title">
+          {% if nonveg %}{{ nonveg.name }}
+          {% elif veg %}{{ veg.name }}
+          {% elif start %}{{ start.name }}
+          {% elif cool %}{{ cool.name }}
+          {% endif %}
+        </h2>
+
+        <p class="movie-info"><strong>Price:</strong> 
+          <span style="color: #e84118; font-size: 1.8rem; font-weight: bold;">
+            ₹{% if nonveg %}{{ nonveg.price }}
+               {% elif veg %}{{ veg.price }}
+               {% elif start %}{{ start.price }}
+               {% elif cool %}{{ cool.price }}
+               {% endif %}
+          </span>
+        </p>
+
+        <p class="movie-info"><strong>Description:</strong></p>
+        <p class="movie-info">
+          {% if nonveg %}{{ nonveg.description|linebreaks }}
+          {% elif veg %}{{ veg.description|linebreaks }}
+          {% elif start %}{{ start.description|linebreaks }}
+          {% elif cool %}{{ cool.description|linebreaks }}
+          {% endif %}
+        </p>
+
+        <br>
+
+        <!-- Action Buttons -->
+        <div class="btn-group">
+           <form method="post" action="
+            {% if nonveg %}{% url 'cart:add_to_cart' nonveg.id 'food' %}
+            {% elif veg %}{% url 'cart:add_to_cart' veg.id 'veg' %}
+            {% elif start %}{% url 'cart:add_to_cart' start.id 'starters' %}
+            {% elif cool %}{% url 'cart:add_to_cart' cool.id 'cooldrinks' %}
+            {% endif %}
+          ">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-success btn-lg">Add to Cart</button>
+          </form>
+
+          <button class="btn btn-outline-warning btn-lg me-3">
+            Save for Later
+          </button>
+
+
+          <!-- {% if nonveg %}
+            <a href="{% url 'updatenonveg' nonveg.id %}" class="btn btn-outline-primary btn-lg">Edit Item</a>
+          {% elif veg %}
+            <a href="{% url 'updatevegfood' veg.id %}" class="btn btn-outline-primary btn-lg">Edit Item</a>
+          {% elif start %}
+            <a href="{% url 'updatestarters' start.id %}" class="btn btn-outline-primary btn-lg">Edit Item</a>
+          {% elif cool %}
+            <a href="{% url 'updatecooldrinks' cool.id %}" class="btn btn-outline-primary btn-lg">Edit Item</a>
+          {% endif %} -->
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Optional: Related Items (You may add later) -->
+{% if related_items %}
+<section class="container mt-5">
+  <h3>You May Also Like</h3>
+  <div class="row">
+    {% for item in related_items %}
+    <div class="col-md-3 mb-4">
+      <div class="card h-100 shadow">
+        <img src="{{ item.image.url }}" class="card-img-top" alt="{{ item.name }}" style="height: 200px; object-fit: cover;">
+        <div class="card-body text-center">
+          <h6>{{ item.name }}</h6>
+          <p class="text-success fw-bold">₹{{ item.price }}</p>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+<style>
+  .movie-img {
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    transition: transform 0.3s;
+  }
+  .movie-img:hover {
+    transform: scale(1.03);
+  }
+  .movie-title {
+    font-size: 2.8rem;
+    font-weight: 700;
+    color: #2d3436;
+  }
+  .movie-info {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 8px;
+  }
+  .section-title {
+    font-size: 2.2rem;
+    color: #e84118;
+    font-weight: 600;
+  }
+</style>
+
+{% endblock %}

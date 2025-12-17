@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+ <!-- forms1 -->
+  {% if form %}
+<div class="container mt-4">
+ <form method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form }}
+    <br>
+    <button type="submit" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Submit
+    </button><br>
+  </form>
+</div>
+{% endif %}
+
+
+
+
+<!-- forms2 -->
+{% if form1 %}
+<div class="container m-5">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form1 }}
+        <br>
+          <button type="submit" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Submit
+    </button><br>
+    </form>
+</div>
+ {% endif %}
+ 
+
+
+ <!-- forms3 -->
+{% if form2 %}
+<div class="container m-5">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form2 }}
+        <br>
+          <button type="submit" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Submit
+    </button><br>
+    </form>
+</div>
+ {% endif %}
+
+
+
+
+ <!-- forms4 -->
+{% if form3 %}
+<div class="container m-5">
+    <form action="" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form3 }}
+        <br>
+          <button type="submit" class="btn btn-success">
+      <i class="bi bi-plus-circle"></i> Submit
+    </button><br>
+    </form>
+</div>
+ {% endif %}
+
+
+
+
+
+
+
+
+
+ 
+ 
+{% endblock %}
